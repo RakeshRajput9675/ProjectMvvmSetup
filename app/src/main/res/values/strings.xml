@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">FinalSetup</string>
+    <string name="google_client_id" translatable="false">677658941684-sq6nj0du15nj7i6tio8e7tn75f6cqjlk.apps.googleusercontent.com</string>
+
+    <string name="facebook_app_id">1596123451348873</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">56789</string>
+<!--    8cd54ce2b19dc22a5466e4dcc5e89af6 App secret-->
 </resources>

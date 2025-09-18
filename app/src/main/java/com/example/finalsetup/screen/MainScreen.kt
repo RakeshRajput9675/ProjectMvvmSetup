@@ -1,5 +1,7 @@
 package com.example.finalsetup.screen
 
+import android.app.Activity
+import android.content.Context
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Column
@@ -17,10 +19,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.navigation.NavHostController
 import com.example.finalsetup.base.CustomLoader
@@ -44,7 +48,7 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel = hilt
         modifier = Modifier
             .padding(horizontal = 16.dp)
             .fillMaxSize(),
-        horizontalAlignment = androidx.compose.ui.Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         OutlinedTextField(
             value = email,
@@ -74,8 +78,8 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel = hilt
 
                 viewModel.hitLoginApi(
                     request = LoginRequest(
-                        deviceToken = "sdfghj",//for notification
-                        deviceType = "1", // check in api response
+                        deviceToken = "asdv",
+                        deviceType = "1",
                         email = email,
                         password = password
                     )
@@ -90,33 +94,53 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel = hilt
 
     }
 
-    LaunchedEffect(Unit) {
-        viewModel.loginResponse.observe(lifeCycleOwner) { it1 ->
-            when (it1) {
+
+
+    ObserveApiResponse(liveData = viewModel.loginResponse) { loginData ->
+
+        viewModel.loginDetail = loginData.data
+        SharedPreference.get(context).accessToken = "Bearer " + loginData.data?.accessToken
+        navController.navigate("home")
+    }
+
+}
+
+
+@Composable
+fun <T> ObserveApiResponse(
+    liveData: LiveData<EmpResource<T>>,
+    context: Context = LocalContext.current,
+    onSuccess: (T) -> Unit
+) {
+    val lifeCycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(liveData) {
+        liveData.observe(lifeCycleOwner) { resource ->
+            when (resource) {
                 is EmpResource.Failure -> {
-                    Log.d("TAG", "observer: fail ")
-                    Toast.makeText(context, it1.throwable?.message, Toast.LENGTH_SHORT).show()
+                    Log.d("TAG", "observer: fail ${resource.throwable?.message}")
+                    Toast.makeText(
+                        context,
+                        resource.throwable?.message ?: "Something went wrong",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     CustomLoader.hideLoader()
                 }
 
                 is EmpResource.Success -> {
-                    Toast.makeText(context, it1.value.message, Toast.LENGTH_SHORT).show()
                     Log.d("TAG", "observer: success")
-                    it1.value.data?.let {
-                        if (it != null) {
-                            viewModel.loginDetail = it
-                            SharedPreference.get(context).accessToken = "Bearer " + it.accessToken
-                            navController.navigate("home")
-                        }
-                    }
+                    // No BaseResponse here — just handle success directly
+                    CustomLoader.hideLoader()
+                    onSuccess(resource.value)
+                }
 
+                is EmpResource.Loading -> {
+                    CustomLoader.showLoader(context as Activity?)
                 }
 
                 else -> {}
             }
         }
     }
-
 }
-
 

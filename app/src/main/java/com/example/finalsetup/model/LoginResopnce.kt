@@ -42,7 +42,7 @@ data class LoginResopnce(
         @SerializedName("id")
         val id: Int?,
         @SerializedName("interest")
-        val interest: String?,
+        val interest: List<String>,
         @SerializedName("is_block")
         val isBlock: Int?,
         @SerializedName("is_otp_verified")

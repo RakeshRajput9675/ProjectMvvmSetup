@@ -59,7 +59,7 @@ class SharedPreference(context: Context) {
         get() = preference["mobileNumber", ""] ?: ""
         set(value) = preference.set("mobileNumber", value)
 
-    var countryCode:String
+    var countryCode: String
         get() = preference["countryCode", ""] ?: ""
         set(value) = preference.set("countryCode", value)
 
@@ -108,6 +108,10 @@ class SharedPreference(context: Context) {
         get() = preference["currencyId", ""] ?: ""
         set(value) = preference.set("currencyId", value)
 
+    var saveId: String
+        get() = preference["saveId", ""] ?: ""
+        set(value) = preference.set("saveId", value)
+
     var skip: Boolean
         get() = preference["skip", false] ?: false
         set(value) = preference.set("skip", value)
@@ -115,6 +119,12 @@ class SharedPreference(context: Context) {
     var isLogin: Boolean
         get() = preference["isLogin", false] ?: false
         set(value) = preference.set("isLogin", value)
+
+
+    fun removeId() {
+        editor.remove("saveId").apply()   // only deletes saveId key
+    }
+
     fun removePreferences() {
         editor.clear().apply()
     }
