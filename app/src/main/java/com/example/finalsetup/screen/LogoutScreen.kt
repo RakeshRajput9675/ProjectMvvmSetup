@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
@@ -38,7 +39,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
-@SuppressLint("UnusedBoxWithConstraintsScope")
+@SuppressLint("UnusedBoxWithConstraintsScope", "CoroutineCreationDuringComposition")
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
 fun LogoutScreen(navController: NavController) {
@@ -84,9 +85,25 @@ fun LogoutScreen(navController: NavController) {
             Spacer(Modifier.height(30.dp))
 
             FcmTokenScreen()
+
+            Spacer(Modifier.height(30.dp))
+            Button(
+                onClick = {
+                    navController.navigate(NavRoute.ChatScreen.route)
+                },
+                modifier = Modifier.fillMaxWidth().height(52.dp)
+                ) {
+                Text("Click to Search")
+            }
+
+
+
+
         }
+
     }
 }
+
 
 @Composable
 fun FcmTokenScreen() {
@@ -100,8 +117,8 @@ fun FcmTokenScreen() {
 
         }
     }
-    Log.e("TAG", "FcmTokenScreen: $token", )
-    Text(if (token.isNotEmpty()) "FCM Token: $token" else "Fetchig")
+    Log.e("TAG", "FcmTokenScreen: $token")
+    Text(if (token.isNotEmpty()) "FCM Token: $token" else "Fetching")
 }
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -115,7 +132,7 @@ fun onLogout(
             val credentialManager = CredentialManager.create(context)
             val request = ClearCredentialStateRequest()
             credentialManager.clearCredentialState(request)
-            SharedPreference.get(context).removeId()
+            SharedPreference.get(context).accessToken = ""
             Toast.makeText(context, "Logout Successfully!", Toast.LENGTH_SHORT).show()
             Log.d("Logout", "Google credentials cleared")
         } catch (e: Exception) {
@@ -126,3 +143,36 @@ fun onLogout(
         popUpTo(NavRoute.LogoutScreen.route) { inclusive = true }
     }
 }
+
+
+//
+//val model = Firebase.ai(backend = GenerativeBackend.googleAI())
+//    .generativeModel("gemini-2.5-flash")
+//
+//
+//val prompt = "Write a story about a magic backpack."
+//
+//var generatedText by remember { mutableStateOf("") }
+//coroutineScope.launch {
+//    try {
+//        val response = model.generateContent(prompt)
+//        generatedText = response.text.toString()
+//    } catch (e: Exception) {
+//        e.printStackTrace()
+//    }
+//}
+//Box(
+//modifier = Modifier.fillMaxSize(),
+//
+//contentAlignment = Alignment.Center
+//) {
+//
+//    if (generatedText.isEmpty()) {
+//        Column {
+//            CircularProgressIndicator()
+//            Text("Generating")
+//        }
+//    } else {
+//        Text(text = generatedText)
+//    }
+//}

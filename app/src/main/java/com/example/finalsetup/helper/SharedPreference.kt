@@ -17,10 +17,11 @@ class SharedPreference(context: Context) {
         var instance: SharedPreference? = null
         fun get(ctx: Context): SharedPreference {
             if (instance == null) {
-                instance = SharedPreference(ctx)
+                instance = SharedPreference(ctx.applicationContext)
             }
             return instance!!
         }
+
     }
 
 
@@ -54,76 +55,14 @@ class SharedPreference(context: Context) {
         }
     }
 
-    //--------------------------------Define Your Global Variable Here:: DeveloperDaya--------------------------------//
-    var mobileNumber: String
-        get() = preference["mobileNumber", ""] ?: ""
-        set(value) = preference.set("mobileNumber", value)
-
-    var countryCode: String
-        get() = preference["countryCode", ""] ?: ""
-        set(value) = preference.set("countryCode", value)
-
-    var deviceToken: String
-        get() = preference["device_token", ""] ?: ""
-        set(value) = preference.set("device_token", value)
-
-
     var name: String
         get() = preference["name", ""] ?: ""
         set(value) = preference.set("name", value)
 
-    var contact_number: String
-        get() = preference["contact_number", ""] ?: ""
-        set(value) = preference.set("contact_number", value)
-
-    var deviceType: String
-        get() = preference["device_type", ""] ?: ""
-        set(value) = preference.set("device_type", value)
-
-    var language: String
-        get() = preference["language", ""] ?: ""
-        set(value) = preference.set("language", value)
-
-    var email: String
-        get() = preference["email", ""] ?: ""
-        set(value) = preference.set("email", value)
-
-    var loginFrom: String
-        get() = preference["loginFrom", ""] ?: ""
-        set(value) = preference.set("loginFrom", value)
 
     var accessToken: String
-        get() = preference["access_token", ""] ?: ""
-        set(value) = preference.set("access_token", value)
-
-    var access_token_type: String
-        get() = preference["token_type", ""] ?: ""
-        set(value) = preference.set("token_type", value)
-
-    var currencySymbol: String
-        get() = preference["currency_symbol", "USD"] ?: ""
-        set(value) = preference.set("currency_symbol", value)
-
-    var currencyId: String
-        get() = preference["currencyId", ""] ?: ""
-        set(value) = preference.set("currencyId", value)
-
-    var saveId: String
-        get() = preference["saveId", ""] ?: ""
-        set(value) = preference.set("saveId", value)
-
-    var skip: Boolean
-        get() = preference["skip", false] ?: false
-        set(value) = preference.set("skip", value)
-
-    var isLogin: Boolean
-        get() = preference["isLogin", false] ?: false
-        set(value) = preference.set("isLogin", value)
-
-
-    fun removeId() {
-        editor.remove("saveId").apply()   // only deletes saveId key
-    }
+        get() = preference["accessToken", ""] ?: ""
+        set(value) = preference.set("accessToken", value)
 
     fun removePreferences() {
         editor.clear().apply()

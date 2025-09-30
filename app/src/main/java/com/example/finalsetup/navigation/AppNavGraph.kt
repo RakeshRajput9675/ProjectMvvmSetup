@@ -10,6 +10,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.finalsetup.NavRoute
 import com.example.finalsetup.helper.SharedPreference
+import com.example.finalsetup.screen.ChatScreen
 import com.example.finalsetup.screen.HomeScreen
 import com.example.finalsetup.screen.LoginUsingGoogle
 import com.example.finalsetup.screen.LogoutScreen
@@ -18,19 +19,11 @@ import com.example.finalsetup.screen.LogoutScreen
 @Composable
 fun AppNavGraph(navController: NavHostController, intent: Intent) {
 
-    LaunchedEffect(intent) {
-        intent?.extras?.getString("screen")?.let { screen ->
-            if (screen == NavRoute.LogoutScreen.route) {
-                navController.navigate(NavRoute.LogoutScreen.route)
-            }
-
-        }
-    }
     val context = navController.context
     val startDestination = if (SharedPreference.get(context).accessToken.isNotEmpty()) {
-        NavRoute.LoginUsingGoogle.route
-    } else {
         NavRoute.LogoutScreen.route
+    } else {
+        NavRoute.LoginUsingGoogle.route
     }
 
     NavHost(navController = navController, startDestination = startDestination) {
@@ -46,6 +39,16 @@ fun AppNavGraph(navController: NavHostController, intent: Intent) {
             NavRoute.LogoutScreen.route
         ) {
             LogoutScreen(navController)
+        }
+        composable(
+            NavRoute.ChatScreen.route
+        ) {
+            ChatScreen()
+        }
+    }
+    LaunchedEffect(intent) {
+        intent?.extras?.getString("screen")?.let { screen ->
+            navController.navigate(screen)
         }
     }
 

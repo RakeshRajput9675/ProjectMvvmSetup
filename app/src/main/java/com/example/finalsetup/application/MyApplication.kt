@@ -40,10 +40,8 @@ class MyFirebaseMessagingService : FirebaseMessagingService() {
                 "fcm_notification",
                 NotificationManager.IMPORTANCE_HIGH
             )
-
             notificationManager.createNotificationChannel(channel)
         }
-
 
         val notification = NotificationCompat.Builder(this, channelId)
             .setContentTitle(title)

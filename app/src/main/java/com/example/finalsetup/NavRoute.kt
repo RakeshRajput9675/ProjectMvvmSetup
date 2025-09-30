@@ -3,4 +3,5 @@ sealed class NavRoute(val route: String) {
     object LoginUsingGoogle : NavRoute("login")
     object LogoutScreen : NavRoute("logout")
     object HomeScreen : NavRoute("home")
+    object ChatScreen: NavRoute("Chat")
 }

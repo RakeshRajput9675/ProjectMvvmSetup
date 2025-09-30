@@ -1,6 +1,8 @@
 package com.example.finalsetup.viewModel
 
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +13,13 @@ import com.example.finalsetup.model.LoginResopnce
 import com.example.finalsetup.model.ProductRequest
 import com.example.finalsetup.repository.AuthRepository
 import com.example.finalsetup.repository.EmpResource
+import com.example.finalsetup.screen.ChatMessage
+import com.google.firebase.Firebase
+import com.google.firebase.ai.ai
+import com.google.firebase.ai.type.GenerativeBackend
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject // <-- Correct import
 
@@ -40,6 +48,41 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             _comprehensive.value = EmpResource.Loading
             _comprehensive.value = repository.comprehensive(token, request)
+        }
+    }
+
+    private val _messages = MutableStateFlow<List<ChatMessage>>(emptyList())
+    val messages: StateFlow<List<ChatMessage>> = _messages
+
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading: StateFlow<Boolean> = _isLoading
+
+    var currentPrompt by mutableStateOf("")
+
+    private val model = Firebase.ai(backend = GenerativeBackend.googleAI())
+        .generativeModel("gemini-2.5-flash")
+
+    fun sendMessage() {
+        if (currentPrompt.isBlank()) return
+
+        val userMessage = ChatMessage(currentPrompt, isUser = true)
+        _messages.value = _messages.value + userMessage
+
+        val prompt = currentPrompt
+        currentPrompt = ""
+        _isLoading.value = true
+
+        viewModelScope.launch {
+            try {
+                val response = model.generateContent(prompt)
+                val aiMessage = ChatMessage(response.text ?: "No response", isUser = false)
+                _messages.value = _messages.value + aiMessage
+            } catch (e: Exception) {
+                val errorMessage = ChatMessage("Error: ${e.localizedMessage}", isUser = false)
+                _messages.value = _messages.value + errorMessage
+            } finally {
+                _isLoading.value = false
+            }
         }
     }
 }

@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -43,6 +44,7 @@ fun LoginUsingGoogle(navController: NavController) {
     val context = LocalContext.current
     val credentialManager = CredentialManager.create(context)
     val coroutineScope = rememberCoroutineScope()
+
 
     BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
@@ -122,9 +124,7 @@ fun handleSignIn(result: GetCredentialResponse, navController: NavController, co
                     // Extract details
                     val idToken = googleIdTokenCredential.idToken
                     val data = googleIdTokenCredential.data
-                    Log.i("Data", "User data : $data ")
-                    SharedPreference.get(context1).saveId = idToken
-
+                    SharedPreference.get(context1).accessToken = idToken
                     navController.navigate(NavRoute.LogoutScreen.route) {
                         popUpTo(NavRoute.LoginUsingGoogle.route) { inclusive = true }
                     }

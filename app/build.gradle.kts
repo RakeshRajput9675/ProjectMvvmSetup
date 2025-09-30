@@ -5,6 +5,8 @@ plugins {
     id("com.google.dagger.hilt.android")
     id("com.google.devtools.ksp")
     alias(libs.plugins.google.gms.google.services)
+    id("com.google.firebase.crashlytics")
+
 }
 
 android {
@@ -89,15 +91,26 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
 
     implementation("io.coil-kt:coil-compose:2.7.0")
+
+//    for country code picker
     implementation ("com.github.abi9567:simpleCountryPicker:1.0.2")
     implementation("androidx.credentials:credentials:1.5.0")
-// optional - needed for credentials support from play services, for devices running
-// Android 13 and below.
 
 
-//    for facebook
+
+//    for firebase notification
     implementation("com.google.firebase:firebase-messaging:25.0.1") // check latest
     implementation("com.google.firebase:firebase-analytics:22.0.2")
+
+
+//    firebase crashlytic
+    implementation("com.google.firebase:firebase-crashlytics-ndk")
+    implementation(platform("com.google.firebase:firebase-bom:34.3.0"))
+
+    // Add the dependency for the Firebase AI Logic library
+    implementation("com.google.firebase:firebase-ai")
+
+
 
 
 
