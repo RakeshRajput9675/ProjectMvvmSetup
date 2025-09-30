@@ -93,11 +93,11 @@ dependencies {
     implementation("androidx.credentials:credentials:1.5.0")
 // optional - needed for credentials support from play services, for devices running
 // Android 13 and below.
-    implementation("androidx.credentials:credentials-play-services-auth:1.5.0")
-    implementation("com.google.android.libraries.identity.googleid:googleid:1.1.1")
+
 
 //    for facebook
-    implementation("com.facebook.android:facebook-login:18.1.3")
+    implementation("com.google.firebase:firebase-messaging:25.0.1") // check latest
+    implementation("com.google.firebase:firebase-analytics:22.0.2")
 
 
 

@@ -125,7 +125,6 @@ fun handleSignIn(result: GetCredentialResponse, navController: NavController, co
                     Log.i("Data", "User data : $data ")
                     SharedPreference.get(context1).saveId = idToken
 
-                    // Send googleIdTokenCredential to your server for validation and authentication
                     navController.navigate(NavRoute.LogoutScreen.route) {
                         popUpTo(NavRoute.LoginUsingGoogle.route) { inclusive = true }
                     }

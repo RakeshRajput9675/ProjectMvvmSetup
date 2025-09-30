@@ -8,8 +8,10 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ButtonDefaults
@@ -17,7 +19,12 @@ import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
@@ -26,6 +33,7 @@ import androidx.credentials.CredentialManager
 import androidx.navigation.NavController
 import com.example.finalsetup.NavRoute
 import com.example.finalsetup.helper.SharedPreference
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -72,8 +80,28 @@ fun LogoutScreen(navController: NavController) {
                     style = MaterialTheme.typography.titleLarge,
                 )
             }
+
+            Spacer(Modifier.height(30.dp))
+
+            FcmTokenScreen()
         }
     }
+}
+
+@Composable
+fun FcmTokenScreen() {
+    var token by remember { mutableStateOf("") }
+    LaunchedEffect(Unit) {
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task->
+            if (task.isSuccessful){
+                token = task.result
+
+            }
+
+        }
+    }
+    Log.e("TAG", "FcmTokenScreen: $token", )
+    Text(if (token.isNotEmpty()) "FCM Token: $token" else "Fetchig")
 }
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)

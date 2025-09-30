@@ -19,7 +19,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val navController = rememberNavController()
-            AppNavGraph(navController = navController)
+            AppNavGraph(navController = navController, intent)
 
 
         }
