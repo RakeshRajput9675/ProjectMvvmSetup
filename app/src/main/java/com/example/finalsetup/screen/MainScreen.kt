@@ -78,7 +78,7 @@ fun MainScreen(navController: NavHostController, viewModel: MainViewModel = hilt
 
                 viewModel.hitLoginApi(
                     request = LoginRequest(
-                        deviceToken = "asdv",
+                        deviceToken = "adv",
                         deviceType = "1",
                         email = email,
                         password = password
@@ -129,7 +129,6 @@ fun <T> ObserveApiResponse(
 
                 is EmpResource.Success -> {
                     Log.d("TAG", "observer: success")
-                    // No BaseResponse here — just handle success directly
                     CustomLoader.hideLoader()
                     onSuccess(resource.value)
                 }

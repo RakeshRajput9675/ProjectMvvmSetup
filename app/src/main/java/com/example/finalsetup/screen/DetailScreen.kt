@@ -87,7 +87,7 @@ import kotlinx.coroutines.launch
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-private fun DetailScreen() {
+ fun DetailScreen() {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()
@@ -463,8 +463,6 @@ private fun DetailScreen() {
             )
 
             var selectedTabIndex by remember { mutableStateOf(0) }
-            val offsetPx = with(LocalDensity.current) { maxHeight * 0.2f }
-            val offsetPrgx = with(LocalDensity.current) { maxHeight * 1f }
 
             val density = LocalDensity.current
             ScrollableTabRow(
@@ -608,10 +606,14 @@ private fun DetailScreen() {
                 content = {
                     items(AroundThisPropertylist.size) { index ->
                         ImageWithTextComposable(
-                            modifier = Modifier,
-                            id = AroundThisPropertylist[index].id,
-                            text = AroundThisPropertylist[index].text
+                            id = R.drawable.zym,
+                            text = "Hello World",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clickable { },
+                            imageModifier = Modifier.size(30.dp)
                         )
+
                     }
                 })
 
@@ -3913,7 +3915,12 @@ fun ButtonYellowBackground(
 
 
 @Composable
-fun ImageWithTextComposable(id: Int, text: String, modifier: Modifier.Companion) {
+fun ImageWithTextComposable(
+    id: Int,
+    text: String,
+    modifier: Modifier = Modifier,          // parent modifier
+    imageModifier: Modifier = Modifier      // child image modifier
+) {
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
@@ -3921,19 +3928,19 @@ fun ImageWithTextComposable(id: Int, text: String, modifier: Modifier.Companion)
     ) {
         CustomImage(
             id = id,
-            modifier = modifier,
+            modifier = imageModifier           // use passed modifier
         )
         CustomText(
             text = text,
-            modifier = modifier,
+            modifier = Modifier.weight(1f),   // optional child modifier for Text
             color = Color(0xff393C47),
             fontSize = 12.sp,
             fontFamily = FontFamily(Font(R.font.m_regular)),
             maxLines = 2,
         )
-
     }
 }
+
 
 @SuppressLint("InvalidColorHexValue")
 @Composable

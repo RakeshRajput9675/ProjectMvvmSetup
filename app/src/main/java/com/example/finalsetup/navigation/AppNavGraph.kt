@@ -5,15 +5,21 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.finalsetup.NavRoute
 import com.example.finalsetup.helper.SharedPreference
 import com.example.finalsetup.screen.ChatScreen
+import com.example.finalsetup.screen.DetailScreen
 import com.example.finalsetup.screen.HomeScreen
+import com.example.finalsetup.screen.LoanScreen
 import com.example.finalsetup.screen.LoginUsingGoogle
 import com.example.finalsetup.screen.LogoutScreen
+import com.example.finalsetup.screen.MainScreen
+import com.example.finalsetup.screen.ScaffoldExample
+import com.example.finalsetup.viewModel.MainViewModel
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
@@ -35,10 +41,22 @@ fun AppNavGraph(navController: NavHostController, intent: Intent) {
         composable(NavRoute.HomeScreen.route) {
             HomeScreen()
         }
+        composable(NavRoute.DetailScreen.route) {
+            DetailScreen()
+        }
+        composable(NavRoute.LoanScreen.route) {
+            LoanScreen()
+        }
         composable(
             NavRoute.LogoutScreen.route
         ) {
             LogoutScreen(navController)
+        }
+        composable(NavRoute.MainScreen.route) {
+            MainScreen(navController)
+        }
+        composable(NavRoute.ScaffoldExample.route) {
+           ScaffoldExample(navController)
         }
         composable(
             NavRoute.ChatScreen.route
@@ -47,7 +65,7 @@ fun AppNavGraph(navController: NavHostController, intent: Intent) {
         }
     }
     LaunchedEffect(intent) {
-        intent?.extras?.getString("screen")?.let { screen ->
+        intent.extras?.getString("screen")?.let { screen ->
             navController.navigate(screen)
         }
     }

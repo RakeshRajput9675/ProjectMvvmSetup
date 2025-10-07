@@ -26,6 +26,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,157 +47,32 @@ import com.example.finalsetup.model.ProductRequest
 import com.example.finalsetup.repository.EmpResource
 import com.example.finalsetup.viewModel.MainViewModel
 
-@SuppressLint("ContextCastToActivity", "InvalidColorHexValue")
+@SuppressLint("ContextCastToActivity", "InvalidColorHexValue", "StateFlowValueCalledInComposition")
 @Composable
 fun HomeScreen(
     viewModel: MainViewModel = hiltViewModel()
 ) {
-    val context = LocalContext.current
-    val token = SharedPreference.get(context).accessToken
 
-    // API call when screen loads
-    LaunchedEffect(Unit) {
-        viewModel.comprehensivehitApi(
-            "Bearer $token", ProductRequest("1")
-        )
-    }
 
-    // Observer for API result
-    Observer(
-        context = context as Activity,
-        lifeCycleOwner = LocalLifecycleOwner.current,
-        viewModel = viewModel
-    )
+//    val name = viewModel.uiData.value.name
+//    val age = viewModel.uiData.value.age
+//    val hobbies = viewModel.uiData.value.hobbies
 
-    val detail = viewModel.comprehensiceDetail.value
-
-    // Map UI labels to API fields
-    val displayList = listOf(
-        "Listing Code" to (detail?.id ?: ""),
-        "Brand" to (detail?.brandName?.brandName ?: ""),
-        "Model" to (detail?.modelNumber ?: ""),
-        "Reference number" to (detail?.referneceNumber ?: ""),
-        "Movement" to (detail?.movementTypeId ?: ""),
-        "Case material" to (detail?.caseMaterial ?: ""),
-        "Bracelet material" to (detail?.braceletMaterial ?: ""),
-        "Year of production" to (detail?.yearOfProduction ?: ""),
-        "Condition" to (detail?.productConditions ?: ""),
-        "Gender" to (detail?.gender ?: ""),
-        "Caliber/movement" to (detail?.caliberMovement ?: ""),
-        "Number of jewels" to (detail?.numberOfJewels ?: ""),
-        "Case diameter" to (detail?.caseDiameterMax ?: ""),
-        "Water resistance" to (detail?.waterResistance ?: ""),
-        "Bezel material" to (detail?.caseMaterial ?: ""),
-        "Dial" to (detail?.caseDiameterMin ?: ""),
-        "Dial numerals" to (detail?.dialNumber ?: ""),
-        "Bracelet color" to (detail?.braceletColor ?: ""),
-        "Clasp" to (detail?.typeOfClasp ?: ""),
-        "Clasp material" to (detail?.claspMaterial ?: "")
-    )
-
-    BoxWithConstraints(
-        modifier = Modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-    ) {
+    BoxWithConstraints(modifier = Modifier.fillMaxSize()) {
         val maxHeight = this.maxHeight
-        Column {
-            // Header
-            Row(
-                modifier = Modifier.padding(start = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    Icons.Default.KeyboardArrowLeft,
-                    contentDescription = "Back",
-                    modifier = Modifier.size(24.dp)
-                )
-                Text(
-                    text = "Comprehensive Details", style = TextStyle(
-                        fontSize = 18.sp,
-                        color = Color(0xff003A4E),
-                        fontWeight = FontWeight.SemiBold
-                    ), modifier = Modifier.padding(start = 10.dp)
-                )
-            }
 
-            Box(
-                modifier = Modifier
-                    .padding(top = 10.dp)
-                    .weight(1f)
-            ) {
-                AsyncImage(
-                    model = detail?.productImages?.get(0)?.imagePath,
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(280.dp)
-                )
+//        i have to collect the data from the viewmodel by using the collectAsState in the ui
+        val data = viewModel.uiData.collectAsState().value
+        viewModel.updateName("Rakesh Kumar")
 
-                // List of details
-                LazyColumn(
-                    modifier = Modifier
-                        .padding(top = maxHeight * 0.25f, start = 20.dp, end = 20.dp)
-                        .fillMaxSize()
-                        .background(
-                            Color.White, RoundedCornerShape(topStart = 10.dp, topEnd = 10.dp)
-                        )
-                        .padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)
-                ) {
-                    items(displayList.size) { index ->
-                        val (label, value) = displayList[index]
-                        Row(modifier = Modifier.fillMaxWidth()) {
-                            Text(
-                                label, modifier = Modifier.weight(1f), style = TextStyle(
-                                    fontSize = 14.sp,
-                                    color = Color(0xff35494F),
-                                    fontWeight = FontWeight.Normal
-                                )
-                            )
-                            Text(
-                                value.toString(),
-                                modifier = Modifier.weight(1f),
-                                textAlign = TextAlign.End,
-                                style = TextStyle(
-                                    fontSize = 14.sp,
-                                    color = Color(0xff0E1C21),
-                                    fontWeight = FontWeight.Medium
-                                ),
-                                maxLines = 1
-                            )
-                        }
-                        HorizontalDivider(
-                            Modifier, DividerDefaults.Thickness, color = Color(0xFF337F9CA6).copy(alpha = 0.20f)
-                        )
-                    }
-                }
-            }
+        Column(
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            Text(data.name)
         }
     }
 }
-@Composable
-fun Observer(
-    context: Activity,
-    lifeCycleOwner: LifecycleOwner,
-    viewModel: MainViewModel
-) {
-    viewModel.comprehensive.observe(lifeCycleOwner) { it1 ->
-        when (it1) {
-            is EmpResource.Failure -> {
-                Log.d("TAG", "observer: fail ")
-                Toast.makeText(context, it1.throwable?.message, Toast.LENGTH_SHORT).show()
-                CustomLoader.hideLoader()
-            }
-            is EmpResource.Success -> {
-                Toast.makeText(context, it1.value.message, Toast.LENGTH_SHORT).show()
-                Log.d("TAG", "observer: success")
-                it1.value.data?.let {
-                    viewModel.comprehensiceDetail.value = it
-                }
-            }
 
-            else -> {}
-        }
-    }
-}
+

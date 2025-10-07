@@ -42,7 +42,7 @@ import kotlinx.coroutines.launch
 
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
-private fun LoanScreen() {
+ fun LoanScreen() {
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxSize()

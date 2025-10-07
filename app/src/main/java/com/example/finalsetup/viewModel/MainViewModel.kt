@@ -21,7 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject // <-- Correct import
+import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
@@ -55,12 +55,13 @@ class MainViewModel @Inject constructor(
     val messages: StateFlow<List<ChatMessage>> = _messages
 
     private val _isLoading = MutableStateFlow(false)
+     val _errro = MutableStateFlow("")
     val isLoading: StateFlow<Boolean> = _isLoading
 
     var currentPrompt by mutableStateOf("")
 
     private val model = Firebase.ai(backend = GenerativeBackend.googleAI())
-        .generativeModel("gemini-2.5-flash")
+        .generativeModel("gemini-2.5-pro")
 
     fun sendMessage() {
         if (currentPrompt.isBlank()) return
@@ -79,10 +80,25 @@ class MainViewModel @Inject constructor(
                 _messages.value = _messages.value + aiMessage
             } catch (e: Exception) {
                 val errorMessage = ChatMessage("Error: ${e.localizedMessage}", isUser = false)
-                _messages.value = _messages.value + errorMessage
+                _errro.value = errorMessage.toString()
             } finally {
                 _isLoading.value = false
             }
         }
     }
+
+    private val _uiData = MutableStateFlow(
+        UiData(name = "Rakesh", age = 25, hobbies = listOf("Coding", "Music"))
+    )
+    val uiData: StateFlow<UiData> = _uiData
+
+    fun updateName(newName: String) {
+        _uiData.value = _uiData.value.copy(name = newName)
+    }
 }
+
+data class UiData(
+    val name: String,
+    val age: Int,
+    val hobbies: List<String>
+)

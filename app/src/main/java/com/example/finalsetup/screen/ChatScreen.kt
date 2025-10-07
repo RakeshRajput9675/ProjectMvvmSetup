@@ -1,5 +1,6 @@
 package com.example.finalsetup.screen
 
+import android.widget.Toast
 import androidx.compose.animation.animateColor
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
@@ -31,19 +32,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.finalsetup.viewModel.MainViewModel
+import kotlin.jvm.Throws
 
 @Composable
 fun ChatScreen(
     viewModel: MainViewModel = hiltViewModel()
 ) {
+    val _error by viewModel._errro.collectAsState()
     val messages by viewModel.messages.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
+    val context = LocalContext.current
 
-    Column(modifier = Modifier.padding(bottom = 10.dp).fillMaxSize()) {
-        // Chat list
+    Column(
+        modifier = Modifier
+            .padding(bottom = 10.dp)
+            .fillMaxSize()
+    ) {
         LazyColumn(
             modifier = Modifier
                 .weight(1f)
@@ -57,23 +65,22 @@ fun ChatScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(8.dp),
-                        contentAlignment = Alignment.BottomEnd
+                        contentAlignment = Alignment.BottomStart
                     ) {
-                        Column(
+                        Row(
                             modifier = Modifier
                                 .background(Color(0xFFECECEC), RoundedCornerShape(12.dp))
-                                .padding(12.dp)
+                                .padding(12.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
                             TypingIndicator()
-                            Spacer(modifier = Modifier.height(4.dp))
-                            Text("Generating...")
                         }
                     }
                 }
             }
 
             items(messages.reversed()) { message ->
-                ChatBubble(message = message)
+                ChatBubble(message = message, _error)
             }
         }
 
@@ -93,7 +100,17 @@ fun ChatScreen(
             )
             Spacer(modifier = Modifier.width(8.dp))
             OutlinedButton(
-                onClick = { viewModel.sendMessage() },
+                onClick = {
+                    if (viewModel.currentPrompt.isEmpty()) {
+                        Toast.makeText(
+                            context,
+                            "Please enter a message",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        viewModel.sendMessage()
+                    }
+                },
                 modifier = Modifier.height(52.dp)
             ) {
                 Text("Send")
@@ -103,7 +120,7 @@ fun ChatScreen(
 }
 
 @Composable
-fun ChatBubble(message: ChatMessage) {
+fun ChatBubble(message: ChatMessage, _error: String) {
     val alignment = if (message.isUser) Alignment.BottomEnd else Alignment.BottomStart
     val bubbleColor = if (message.isUser) Color(0xFFDCF8C6) else Color(0xFFECECEC)
 
@@ -113,13 +130,23 @@ fun ChatBubble(message: ChatMessage) {
             .padding(4.dp),
         contentAlignment = alignment
     ) {
-        Text(
-            text = message.text,
-            modifier = Modifier
-                .background(bubbleColor, shape = RoundedCornerShape(12.dp))
-                .padding(12.dp),
-            color = Color.Black
-        )
+        if (message.text.isEmpty()) {
+            Text(
+                text = _error,
+                modifier = Modifier
+                    .background(bubbleColor, shape = RoundedCornerShape(12.dp))
+                    .padding(12.dp),
+                color = Color.Black
+            )
+        } else {
+            Text(
+                text = message.text,
+                modifier = Modifier
+                    .background(bubbleColor, shape = RoundedCornerShape(12.dp))
+                    .padding(12.dp),
+                color = Color.Black
+            )
+        }
     }
 }
 

@@ -95,10 +95,6 @@ fun LogoutScreen(navController: NavController) {
                 ) {
                 Text("Click to Search")
             }
-
-
-
-
         }
 
     }
