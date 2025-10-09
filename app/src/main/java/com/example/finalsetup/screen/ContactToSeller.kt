@@ -22,9 +22,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
@@ -71,7 +68,7 @@ private fun ContactToSeller() {
                 modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.Start
             ) {
                 Icon(
-                    Icons.Default.KeyboardArrowLeft,
+                    painter = painterResource(R.drawable.forward),
                     contentDescription = null,
                     modifier = Modifier
                         .padding(start = 16.dp)
@@ -167,7 +164,7 @@ private fun ContactToSeller() {
                                 ), modifier = Modifier.weight(1f)
                             )
                             Icon(
-                                Icons.Default.Favorite,
+                                painter = painterResource(R.drawable.forward),
                                 contentDescription = null,
                                 modifier = Modifier.size(16.dp)
 
@@ -239,7 +236,7 @@ private fun ContactToSeller() {
                         )
 
                         Icon(
-                            Icons.Default.Favorite,
+                            painter = painterResource(R.drawable.forward),
                             contentDescription = null,
                             modifier = Modifier.size(16.dp)
 

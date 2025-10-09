@@ -67,50 +67,49 @@ dependencies {
 
 //    dependency for full mvvm structure
     // Retrofit & Gson converter
-    implementation("com.squareup.retrofit2:retrofit:2.11.0")
-    implementation("com.squareup.retrofit2:converter-gson:2.11.0")
+    implementation(libs.retrofit)
+    implementation(libs.converter.gson)
 
     // Hilt for DI
-    implementation("com.google.dagger:hilt-android:2.52")
-    ksp("com.google.dagger:hilt-android-compiler:2.52")
-    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
+    implementation(libs.hilt.android)
+    ksp(libs.hilt.android.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
 
     // OkHttp Logging Interceptor
-    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    implementation(libs.logging.interceptor)
 
     // Coil for Compose image loading
-    implementation("io.coil-kt:coil-compose:2.6.0")
+    implementation(libs.coil.kt.coil.compose)
 
 
     // Jetpack Lifecycle & ViewModel ktx
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.7")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.8.7")
-    implementation("androidx.activity:activity-compose:1.9.3")
+    implementation(libs.androidx.lifecycle.runtime.ktx)
+    implementation(libs.androidx.lifecycle.viewmodel.ktx)
+    implementation(libs.androidx.activity.compose)
 
     // Coroutines (if used)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.9.0")
+    implementation(libs.kotlinx.coroutines.android)
 
-    implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation(libs.coil.kt.coil.compose)
 
 //    for country code picker
-    implementation ("com.github.abi9567:simpleCountryPicker:1.0.2")
-    implementation("androidx.credentials:credentials:1.5.0")
-
-
+    implementation (libs.simplecountrypicker)
+    implementation(libs.androidx.credentials)
 
 //    for firebase notification
-    implementation("com.google.firebase:firebase-messaging:25.0.1") // check latest
-    implementation("com.google.firebase:firebase-analytics:22.0.2")
+    implementation(libs.firebase.messaging) // check latest
+    implementation(libs.firebase.analytics)
 
-
-//    firebase crashlytic
-    implementation("com.google.firebase:firebase-crashlytics-ndk")
-    implementation(platform("com.google.firebase:firebase-bom:34.3.0"))
+//    firebase crash lytic
+    implementation(libs.firebase.crashlytics.ndk)
+    implementation(platform(libs.firebase.bom))
 
     // Add the dependency for the Firebase AI Logic library
-    implementation("com.google.firebase:firebase-ai")
+    implementation(libs.firebase.ai)
 
-
+    implementation(libs.kotlin.stdlib)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.material.icons.extended)
 
 
 

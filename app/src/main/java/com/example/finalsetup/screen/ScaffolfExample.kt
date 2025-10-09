@@ -1,6 +1,7 @@
 package com.example.finalsetup.screen
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -82,19 +83,22 @@ fun ScaffoldExample(navController: NavController? = null) {
                         Column(
                             modifier = Modifier
                                 .weight(1f)
-                                .clickable { /* handle click */ }
-                                .padding(vertical = 4.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Icon(
-
-                                icon, contentDescription = label, modifier = Modifier.clickable {
+                                .clickable(
+                                    interactionSource = remember { MutableInteractionSource() },
+                                    indication = null,
+                                ) {
                                     selectedScreen = when (label) {
                                         "Search" -> NavRoute.DetailScreen.route
                                         else -> ""
                                     }
                                     selectedIndex = index
-                                },
+                                }
+                                .padding(vertical = 4.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Icon(
+
+                                icon, contentDescription = label, modifier = Modifier,
                                 tint = if (isSelected) MaterialTheme.colorScheme.primary
                                 else Color.Gray
                             )
@@ -108,9 +112,20 @@ fun ScaffoldExample(navController: NavController? = null) {
 
         ) { innerPadding ->
         when (selectedScreen) {
-            NavRoute.HomeScreen.route -> HomeScreen()
-            NavRoute.DetailScreen.route -> DetailScreen()
-            else -> HomeScreen()
+            NavRoute.HomeScreen.route -> HomeScreen(
+                modifier = Modifier.padding(innerPadding)
+
+            )
+
+            NavRoute.DetailScreen.route -> DetailScreen(
+                modifier = Modifier.padding(innerPadding)
+
+            )
+
+            else -> HomeScreen(
+                modifier = Modifier.padding(innerPadding)
+
+            )
 
         }
     }

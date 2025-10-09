@@ -5,7 +5,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,7 +19,6 @@ import com.example.finalsetup.screen.LoginUsingGoogle
 import com.example.finalsetup.screen.LogoutScreen
 import com.example.finalsetup.screen.MainScreen
 import com.example.finalsetup.screen.ScaffoldExample
-import com.example.finalsetup.viewModel.MainViewModel
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
 @Composable
@@ -39,10 +38,10 @@ fun AppNavGraph(navController: NavHostController, intent: Intent) {
             LoginUsingGoogle(navController)
         }
         composable(NavRoute.HomeScreen.route) {
-            HomeScreen()
+            HomeScreen(modifier = Modifier)
         }
         composable(NavRoute.DetailScreen.route) {
-            DetailScreen()
+            DetailScreen(modifier = Modifier)
         }
         composable(NavRoute.LoanScreen.route) {
             LoanScreen()
