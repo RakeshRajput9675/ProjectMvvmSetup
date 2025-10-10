@@ -1,5 +1,6 @@
 package com.example.finalsetup.navigation
 
+import HomeScreen
 import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -13,7 +14,6 @@ import com.example.finalsetup.NavRoute
 import com.example.finalsetup.helper.SharedPreference
 import com.example.finalsetup.screen.ChatScreen
 import com.example.finalsetup.screen.DetailScreen
-import com.example.finalsetup.screen.HomeScreen
 import com.example.finalsetup.screen.LoanScreen
 import com.example.finalsetup.screen.LoginUsingGoogle
 import com.example.finalsetup.screen.LogoutScreen

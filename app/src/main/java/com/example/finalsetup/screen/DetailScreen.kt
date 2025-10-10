@@ -3634,6 +3634,7 @@ fun PriceTrendsComposable(showLocality: Boolean? = false) {
 
 }
 
+
 @SuppressLint("InvalidColorHexValue")
 @Composable
 private fun BHKComposable(modifier: Modifier) {
