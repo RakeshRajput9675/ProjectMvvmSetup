@@ -1,3 +1,5 @@
+@file:Suppress("DEPRECATION")
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -111,6 +113,6 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     implementation(libs.androidx.compose.material.icons.extended)
 
-    implementation("com.razorpay:checkout:1.6.41")
+    implementation(libs.checkout)
 
 }

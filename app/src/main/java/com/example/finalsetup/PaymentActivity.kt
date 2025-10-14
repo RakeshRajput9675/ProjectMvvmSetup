@@ -3,12 +3,14 @@ package com.example.finalsetup
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
+import androidx.navigation.NavController
 import com.razorpay.Checkout
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultWithDataListener
 import org.json.JSONObject
 
 class PaymentActivity : ComponentActivity(), PaymentResultWithDataListener {
+    val navController: NavController? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,8 +44,7 @@ class PaymentActivity : ComponentActivity(), PaymentResultWithDataListener {
     }
 
     override fun onPaymentSuccess(p0: String?, p1: PaymentData?) {
-
-        Toast.makeText(this, "Payment Success: $p0", Toast.LENGTH_LONG).show()
+        navController?.navigate(NavRoute.HomeScreen.route)
     }
 
     override fun onPaymentError(code: Int, description: String?, paymentData: PaymentData?) {

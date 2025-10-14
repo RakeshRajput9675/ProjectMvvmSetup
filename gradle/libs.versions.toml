@@ -1,9 +1,10 @@
 [versions]
 agp = "8.13.0"
+checkout = "1.6.41"
 coilComposeVersion = "2.7.0"
 converterGson = "3.0.0"
 firebaseAnalytics = "23.0.0"
-firebaseBom = "34.3.0"
+firebaseBom = "34.4.0"
 firebaseMessaging = "25.0.1"
 hiltAndroid = "2.57.2"
 hiltAndroidCompiler = "2.57.2"
@@ -17,14 +18,14 @@ kotlinStdlib = "2.2.20"
 kotlinxCoroutinesAndroid = "1.10.2"
 lifecycleRuntimeKtx = "2.9.4"
 activityCompose = "1.11.0"
-composeBom = "2025.09.01"
-googleGmsGoogleServices = "4.4.3"
+composeBom = "2025.10.00"
+googleGmsGoogleServices = "4.4.4"
 firebaseAuth = "24.0.1"
 credentials = "1.5.0"
 credentialsPlayServicesAuth = "1.5.0"
 googleid = "1.1.1"
 lifecycleViewmodelKtx = "2.9.4"
-loggingInterceptor = "5.1.0"
+loggingInterceptor = "5.2.1"
 material3 = "1.4.0"
 materialIconsExtended = "1.7.8"
 simplecountrypicker = "1.0.2"
@@ -35,6 +36,7 @@ androidx-compose-material3 = { module = "androidx.compose.material3:material3", 
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+checkout = { module = "com.razorpay:checkout", version.ref = "checkout" }
 coil-kt-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilComposeVersion" }
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 firebase-ai = { module = "com.google.firebase:firebase-ai" }

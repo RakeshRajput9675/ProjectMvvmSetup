@@ -130,7 +130,6 @@ fun handleSignIn(result: GetCredentialResponse, navController: NavController, co
                 try {
                     val googleIdTokenCredential =
                         GoogleIdTokenCredential.createFrom(credential.data)
-                    // Extract details
                     val idToken = googleIdTokenCredential.idToken
                     val data = googleIdTokenCredential.data
                     SharedPreference.get(context1).accessToken = idToken
@@ -143,11 +142,9 @@ fun handleSignIn(result: GetCredentialResponse, navController: NavController, co
                     Log.e("TAG", "Received an invalid google id token response", e)
                 }
             } else {
-                // Catch any unrecognized custom credential type here.
                 Log.e("TAG", "Unexpected type of credential")
             }
         }
-
         else -> {
             // Catch any unrecognized credential type here.
             Log.e("TAG", "Unexpected type of credential")
