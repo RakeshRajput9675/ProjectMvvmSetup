@@ -72,6 +72,7 @@ fun LogoutScreen(navController: NavController) {
                     pressedElevation = 4.dp,
                     hoveredElevation = 6.dp,
                     focusedElevation = 8.dp
+
                 ),
                 contentPadding = ButtonDefaults.TextButtonContentPadding
             ) {
@@ -108,9 +109,9 @@ fun FcmTokenScreen() {
         FirebaseMessaging.getInstance().token.addOnCompleteListener { task->
             if (task.isSuccessful){
                 token = task.result
-
+            }else{
+                Log.e("TAG", "FcmTokenScreen: ${task.exception?.message}")
             }
-
         }
     }
     Log.e("TAG", "FcmTokenScreen: $token")
@@ -141,34 +142,3 @@ fun onLogout(
 }
 
 
-//
-//val model = Firebase.ai(backend = GenerativeBackend.googleAI())
-//    .generativeModel("gemini-2.5-flash")
-//
-//
-//val prompt = "Write a story about a magic backpack."
-//
-//var generatedText by remember { mutableStateOf("") }
-//coroutineScope.launch {
-//    try {
-//        val response = model.generateContent(prompt)
-//        generatedText = response.text.toString()
-//    } catch (e: Exception) {
-//        e.printStackTrace()
-//    }
-//}
-//Box(
-//modifier = Modifier.fillMaxSize(),
-//
-//contentAlignment = Alignment.Center
-//) {
-//
-//    if (generatedText.isEmpty()) {
-//        Column {
-//            CircularProgressIndicator()
-//            Text("Generating")
-//        }
-//    } else {
-//        Text(text = generatedText)
-//    }
-//}

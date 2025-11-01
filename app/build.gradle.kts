@@ -14,7 +14,6 @@ plugins {
 android {
     namespace = "com.example.finalsetup"
     compileSdk = 36
-
     defaultConfig {
         applicationId = "com.example.finalsetup"
         minSdk = 24
@@ -67,7 +66,7 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-//    dependency for full mvvm structure
+     //dependency for full mvvm structure
     // Retrofit & Gson converter
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
@@ -114,5 +113,6 @@ dependencies {
     implementation(libs.androidx.compose.material.icons.extended)
 
     implementation(libs.checkout)
+    implementation(libs.androidx.compose.material3)
 
 }

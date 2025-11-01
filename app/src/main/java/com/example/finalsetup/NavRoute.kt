@@ -8,6 +8,7 @@ sealed class NavRoute(val route: String) {
     object HomeScreen : NavRoute("home")
     object ChatScreen: NavRoute("Chat")
     object DetailScreen : NavRoute("detail")
+    object ProfileScreen : NavRoute("Profile")
     object LoanScreen : NavRoute("loan")
     object MainScreen : NavRoute("main")
     object ScaffoldExample: NavRoute("scaffold")

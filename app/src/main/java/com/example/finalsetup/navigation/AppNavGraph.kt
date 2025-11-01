@@ -1,6 +1,6 @@
 package com.example.finalsetup.navigation
 
-import HomeScreen
+import com.example.finalsetup.screen.HomeScreen
 import android.content.Intent
 import android.os.Build
 import androidx.annotation.RequiresApi
@@ -18,6 +18,7 @@ import com.example.finalsetup.screen.LoanScreen
 import com.example.finalsetup.screen.LoginUsingGoogle
 import com.example.finalsetup.screen.LogoutScreen
 import com.example.finalsetup.screen.MainScreen
+import com.example.finalsetup.screen.ProfileScreen
 import com.example.finalsetup.screen.ScaffoldExample
 
 @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
@@ -38,7 +39,7 @@ fun AppNavGraph(navController: NavHostController, intent: Intent) {
             LoginUsingGoogle(navController)
         }
         composable(NavRoute.HomeScreen.route) {
-            HomeScreen(modifier = Modifier)
+            HomeScreen()
         }
         composable(NavRoute.DetailScreen.route) {
             DetailScreen(modifier = Modifier)
@@ -50,6 +51,11 @@ fun AppNavGraph(navController: NavHostController, intent: Intent) {
             NavRoute.LogoutScreen.route
         ) {
             LogoutScreen(navController)
+        }
+        composable(
+            NavRoute.ProfileScreen.route
+        ) {
+            ProfileScreen(modifier = Modifier)
         }
         composable(NavRoute.MainScreen.route) {
             MainScreen(navController)

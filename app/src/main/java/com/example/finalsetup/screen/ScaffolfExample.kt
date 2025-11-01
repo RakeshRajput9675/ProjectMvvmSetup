@@ -1,6 +1,5 @@
 package com.example.finalsetup.screen
 
-import HomeScreen
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
@@ -90,6 +89,7 @@ fun ScaffoldExample(navController: NavController? = null) {
                                 ) {
                                     selectedScreen = when (label) {
                                         "Search" -> NavRoute.DetailScreen.route
+                                        "Profile" -> NavRoute.ProfileScreen.route
                                         else -> ""
                                     }
                                     selectedIndex = index
@@ -114,7 +114,6 @@ fun ScaffoldExample(navController: NavController? = null) {
         ) { innerPadding ->
         when (selectedScreen) {
             NavRoute.HomeScreen.route -> HomeScreen(
-                modifier = Modifier.padding(innerPadding)
 
             )
 
@@ -122,9 +121,12 @@ fun ScaffoldExample(navController: NavController? = null) {
                 modifier = Modifier.padding(innerPadding)
 
             )
+            NavRoute.ProfileScreen.route -> ProfileScreen(
+                modifier = Modifier.padding(innerPadding)
+
+            )
 
             else -> HomeScreen(
-                modifier = Modifier.padding(innerPadding)
 
             )
 
