@@ -7,6 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import com.example.finalsetup.model.Article
 import com.example.finalsetup.model.ComprehensiveResopnce
 import com.example.finalsetup.model.LoginRequest
 import com.example.finalsetup.model.LoginResopnce
@@ -18,6 +21,7 @@ import com.google.firebase.Firebase
 import com.google.firebase.ai.ai
 import com.google.firebase.ai.type.GenerativeBackend
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -95,6 +99,9 @@ class MainViewModel @Inject constructor(
     fun updateName(newName: String) {
         _uiData.value = _uiData.value.copy(name = newName)
     }
+
+    fun getBreakingNews(): Flow<PagingData<Article>> = repository.getNews().cachedIn(viewModelScope)
+
 }
 
 data class UiData(

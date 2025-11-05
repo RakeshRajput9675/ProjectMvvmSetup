@@ -35,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.finalsetup.NavRoute
 
 
@@ -77,7 +78,7 @@ fun ScaffoldExample(navController: NavController? = null) {
                         Icons.Default.Home to "Home",
                         Icons.Default.Search to "Search",
                         Icons.Default.Person to "Profile",
-                        Icons.Default.Settings to "Setting"
+                        Icons.Default.Settings to "paging"
                     ).forEachIndexed { index, (icon, label) ->
                         val isSelected = index == selectedIndex
                         Column(
@@ -90,7 +91,8 @@ fun ScaffoldExample(navController: NavController? = null) {
                                     selectedScreen = when (label) {
                                         "Search" -> NavRoute.DetailScreen.route
                                         "Profile" -> NavRoute.ProfileScreen.route
-                                        else -> ""
+                                        "paging"-> NavRoute.PagingListScreen.route
+                                        else -> NavRoute.HomeScreen.route
                                     }
                                     selectedIndex = index
                                 }
@@ -124,6 +126,9 @@ fun ScaffoldExample(navController: NavController? = null) {
             NavRoute.ProfileScreen.route -> ProfileScreen(
                 modifier = Modifier.padding(innerPadding)
 
+            )
+            NavRoute.PagingListScreen.route -> PagingListScreen(
+                navController = navController as NavHostController,
             )
 
             else -> HomeScreen(

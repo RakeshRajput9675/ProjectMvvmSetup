@@ -1,5 +1,8 @@
 @file:Suppress("DEPRECATION")
 
+import org.gradle.kotlin.dsl.implementation
+
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -114,5 +117,12 @@ dependencies {
 
     implementation(libs.checkout)
     implementation(libs.androidx.compose.material3)
+
+    implementation ("androidx.paging:paging-runtime:3.3.6")
+    implementation ("androidx.paging:paging-compose:3.3.6")
+//    Swipe To Refresh
+    implementation("com.google.accompanist:accompanist-swiperefresh:0.35.1-alpha")
+
+
 
 }

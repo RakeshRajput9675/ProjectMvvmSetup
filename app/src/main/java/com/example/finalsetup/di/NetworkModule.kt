@@ -50,12 +50,12 @@ class NetworkModule {
             .setLenient()
             .create()
     }
-
+//    https://www.themoviedb.org/documentation/api
     @Provides
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("http://35.171.148.98/")
+            .baseUrl("https://newsapi.org/v2/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()

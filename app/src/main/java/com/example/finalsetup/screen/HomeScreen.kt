@@ -32,8 +32,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.material3.rememberDateRangePickerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -47,6 +49,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.example.finalsetup.PaymentActivity
+import kotlinx.coroutines.delay
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -54,6 +57,16 @@ import java.util.Calendar
 @Composable
 fun HomeScreen(
 ) {
+    var refreshing by remember { mutableStateOf(false) }
+
+    // refresh logic
+    suspend fun refreshContent() {
+        refreshing = true
+        delay(2000) // pretend to fetch data or rebuild your composable tree
+        refreshing = false
+    }
+
+
     val state = rememberDateRangePickerState()
     var enabled by remember { mutableStateOf(false) }
     val context = LocalContext.current

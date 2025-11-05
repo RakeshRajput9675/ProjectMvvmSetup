@@ -2,6 +2,7 @@ package com.example.finalsetup.navigation
 
 import com.example.finalsetup.screen.HomeScreen
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
@@ -13,11 +14,13 @@ import androidx.navigation.compose.composable
 import com.example.finalsetup.NavRoute
 import com.example.finalsetup.helper.SharedPreference
 import com.example.finalsetup.screen.ChatScreen
+import com.example.finalsetup.screen.DetailPage
 import com.example.finalsetup.screen.DetailScreen
 import com.example.finalsetup.screen.LoanScreen
 import com.example.finalsetup.screen.LoginUsingGoogle
 import com.example.finalsetup.screen.LogoutScreen
 import com.example.finalsetup.screen.MainScreen
+import com.example.finalsetup.screen.PagingListScreen
 import com.example.finalsetup.screen.ProfileScreen
 import com.example.finalsetup.screen.ScaffoldExample
 
@@ -63,11 +66,29 @@ fun AppNavGraph(navController: NavHostController, intent: Intent) {
         composable(NavRoute.ScaffoldExample.route) {
            ScaffoldExample(navController)
         }
+        composable(NavRoute.PagingListScreen.route) {
+            PagingListScreen(
+                navController = navController
+            )
+        }
+        composable("detail/{title}/{urlToImage}/{description}") { backStackEntry ->
+            val title = Uri.decode(backStackEntry.arguments?.getString("title") ?: "")
+            val urlToImage = Uri.decode(backStackEntry.arguments?.getString("urlToImage") ?: "")
+            val description = Uri.decode(backStackEntry.arguments?.getString("description") ?: "")
+
+            DetailPage(title = title, urlToImage = urlToImage, description = description, navController)
+        }
+
+
+
+
         composable(
             NavRoute.ChatScreen.route
         ) {
             ChatScreen()
         }
+
+
     }
     LaunchedEffect(intent) {
         intent.extras?.getString("screen")?.let { screen ->

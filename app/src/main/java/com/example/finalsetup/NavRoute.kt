@@ -12,4 +12,6 @@ sealed class NavRoute(val route: String) {
     object LoanScreen : NavRoute("loan")
     object MainScreen : NavRoute("main")
     object ScaffoldExample: NavRoute("scaffold")
+    object PagingListScreen: NavRoute("paging")
+    object DetailPage: NavRoute("detail")
 }
